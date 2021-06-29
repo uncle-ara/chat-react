@@ -7,4 +7,4 @@ const Button = ({ ...rest }: Props) => {
   return <button className={styles.base} {...rest}></button>
 }
 
-export default React.memo(Button)
+export default Button

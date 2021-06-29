@@ -21,10 +21,11 @@ firebase.analytics()
 
 const auth = firebase.auth()
 const firestore = firebase.firestore()
-export const Context = createContext({ auth, firestore, firebase })
+export const initialContext = { auth, firestore, firebase }
+export const Context = createContext(initialContext)
 
 ReactDOM.render(
-  <Context.Provider value={{ auth, firestore, firebase }}>
+  <Context.Provider value={initialContext}>
     <App />
   </Context.Provider>,
   document.getElementById('root'),

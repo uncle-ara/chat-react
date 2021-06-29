@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { Context } from '../..'
 import firebase from 'firebase'
 import Loader from '../Loader/Loader'
@@ -10,17 +11,23 @@ import Message from '../Message/Message'
 
 import styles from './Chat.module.less'
 
+const createIdFromMessage = ({ createdAt: { seconds, nanoseconds } }: Data<firebase.firestore.DocumentData, '', ''>) =>
+  `${seconds}-${nanoseconds}`
+
 const Chat = () => {
   const { auth, firestore } = useContext(Context)
   const [user] = useAuthState(auth)
   const [messages, loading] = useCollectionData(firestore.collection('messages').orderBy('createdAt'))
   const [messageText, setMessageText] = useState('')
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
+    if (!user) {
+      return
+    }
     firestore.collection('messages').add({
-      uid: user?.uid,
-      displayName: user?.displayName,
-      avatar: user?.photoURL,
+      uid: user.uid,
+      displayName: user.displayName,
+      avatar: user.photoURL,
       text: messageText,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     })
@@ -33,18 +40,23 @@ const Chat = () => {
     }
   }
 
+  console.log(messages)
+
   if (loading) {
     return <Loader />
   }
-
-  console.log(user)
 
   return (
     <div className={styles.base}>
       <div className={styles.content}>
         {messages?.map((message) => (
-          // <Message {...message} />
-          <div key={message.uid}>{message.text}</div>
+          <Message
+            key={createIdFromMessage(message)}
+            id={createIdFromMessage(message)}
+            name={message.displayName}
+            text={message.text}
+            avatar={message.avatar}
+          />
         ))}
       </div>
       <div className={styles.control}>
