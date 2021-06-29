@@ -37,7 +37,7 @@ const Chat = () => {
    * Clear message input.
    */
   const sendMessage = () => {
-    if (!user) {
+    if (!user || messageText.trim().length === 0) {
       return
     }
 
