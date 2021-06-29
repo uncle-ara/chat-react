@@ -1,24 +1,12 @@
 import React from 'react'
+import LoaderSVG from './svg/loader.svg'
 
 import styles from './Loader.module.less'
 
 const Loader = () => {
   return (
     <div className={styles.base}>
-      <div className="lds-default">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <img src={LoaderSVG} alt="Loader" />
     </div>
   )
 }

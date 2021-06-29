@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import firebase from 'firebase'
-import { Context } from '../..'
+import { Context } from '../../context'
 
 import styles from './UserMenu.module.less'
 

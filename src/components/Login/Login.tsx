@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import firebase from 'firebase'
 import Button from '../Button/Button'
-import { Context } from '../..'
+import { Context } from '../../context'
 
 import styles from './Login.module.less'
 

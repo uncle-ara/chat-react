@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
-import { Context } from '../..'
+import { Context } from '../../context'
 import firebase from 'firebase'
 import Loader from '../Loader/Loader'
 import Button from '../Button/Button'
@@ -40,8 +40,6 @@ const Chat = () => {
     }
   }
 
-  console.log(messages)
-
   if (loading) {
     return <Loader />
   }
@@ -52,7 +50,7 @@ const Chat = () => {
         {messages?.map((message) => (
           <Message
             key={createIdFromMessage(message)}
-            id={createIdFromMessage(message)}
+            uid={message.uid}
             name={message.displayName}
             text={message.text}
             avatar={message.avatar}

@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { Context } from '../../context'
 import styles from './Message.module.less'
 
 export type Props = {
-  id: string
+  uid: string
   name: string
   avatar: string
   text: string
 }
 
-const Message = ({ id, name, avatar, text }: Props) => {
-  return <div className={styles.base}>{text}</div>
+const Message = ({ uid, name, avatar, text }: Props) => {
+  const { auth } = useContext(Context)
+  const [user] = useAuthState(auth)
+
+  return (
+    <div className={styles.base}>
+      {user?.uid === uid ? <img src={avatar} alt={name} className={styles.avatar} /> : null}
+      <div className={user?.uid === uid ? styles.sender : styles.recipient}>{text}</div>
+    </div>
+  )
 }
 
 export default Message

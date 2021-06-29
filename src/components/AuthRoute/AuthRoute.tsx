@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { Context } from '../..'
+import { Context } from '../../context'
 
 export interface Props extends RouteProps {
   component: React.FC

@@ -9,11 +9,16 @@ import Chat from './components/Chat/Chat'
 import Login from './components/Login/Login'
 
 import styles from './App.module.less'
-import { Context } from '.'
+import { Context } from './context'
 
 const App = () => {
   const { auth } = useContext(Context)
-  const [user, loading, error] = useAuthState(auth)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, loading, error] = useAuthState(auth)
+
+  if (error) {
+    return <div className={styles.base}>{error.message}</div>
+  }
 
   if (loading) {
     return <Loader />
