@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react'
+import { BrowserRouter, Switch } from 'react-router-dom'
+import AuthRoute from './components/AuthRoute/AuthRoute'
+import UnauthedRoute from './components/UnauthedRoute/UnauthedRoute'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import Loader from './components/Loader/Loader'
+import UserMenu from './components/UserMenu/UserMenu'
+import Chat from './components/Chat/Chat'
+import Login from './components/Login/Login'
 
-function App() {
+import styles from './App.module.less'
+import { Context } from '.'
+
+const App = () => {
+  const { auth } = useContext(Context)
+  const [user, loading, error] = useAuthState(auth)
+
+  if (loading) {
+    return <Loader />
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <div className={styles.base}>
+        <header className={styles.header}>
+          <UserMenu />
+        </header>
+        <Switch>
+          <AuthRoute component={Chat} path="/chat" />
+          <UnauthedRoute component={Login} path="/" />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
