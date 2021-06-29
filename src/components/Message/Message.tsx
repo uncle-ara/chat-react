@@ -2,10 +2,10 @@ import React from 'react'
 import styles from './Message.module.less'
 
 export type Props = {
-  id?: string
-  name?: string
-  avatar?: string
-  text?: string
+  id: string
+  name: string
+  avatar: string
+  text: string
 }
 
 const Message = ({ id, name, avatar, text }: Props) => {

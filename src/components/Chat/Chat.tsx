@@ -27,7 +27,7 @@ const Chat = () => {
     setMessageText('')
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       sendMessage()
     }
@@ -36,6 +36,8 @@ const Chat = () => {
   if (loading) {
     return <Loader />
   }
+
+  console.log(user)
 
   return (
     <div className={styles.base}>
@@ -47,12 +49,14 @@ const Chat = () => {
       </div>
       <div className={styles.control}>
         <div className={styles.inputMessage}>
-          <Input value={messageText} onChange={(event) => setMessageText(event.target.value)} />
+          <Input
+            value={messageText}
+            onChange={(event) => setMessageText(event.target.value)}
+            onKeyPress={handleKeyDown}
+          />
         </div>
         <div className={styles.sendButton}>
-          <Button onClick={sendMessage} onKeyDown={handleKeyDown}>
-            Send
-          </Button>
+          <Button onClick={sendMessage}>Send</Button>
         </div>
       </div>
     </div>
