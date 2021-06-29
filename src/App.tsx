@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { BrowserRouter, Switch } from 'react-router-dom'
 import AuthRoute from './components/AuthRoute/AuthRoute'
 import UnauthedRoute from './components/UnauthedRoute/UnauthedRoute'

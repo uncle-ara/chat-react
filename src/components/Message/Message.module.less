@@ -1,21 +1,32 @@
 .base {
   display: flex;
-  align-items: center;
+  flex: 0 0 100%;
   margin: 5px 10px;
 }
 
-.sender,
-.recipient {
+.own {
+  width: 100%;
   display: flex;
-
-  padding: 5px;
-  border-radius: 6px;
-  background-color: rgb(235, 235, 235);
+  justify-content: flex-end;
 }
 
-.recipient {
-  background-color: rgb(114, 175, 98);
-  justify-content: flex-end;
+.text {
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #57457c;
+  color: #fff;
+}
+
+.companion {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+
+  .text {
+    color: #222;
+    background-color: rgb(235, 235, 235);
+  }
 }
 
 .avatar {
@@ -24,6 +35,5 @@
   background-position: center;
   background-size: contain;
   border-radius: 100%;
-
   margin-right: 10px;
 }

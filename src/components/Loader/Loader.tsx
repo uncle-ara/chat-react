@@ -1,4 +1,3 @@
-import React from 'react'
 import LoaderSVG from './svg/loader.svg'
 
 import styles from './Loader.module.less'

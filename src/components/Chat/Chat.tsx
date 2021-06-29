@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { Context } from '../../context'
 import firebase from 'firebase'
 import Loader from '../Loader/Loader'
@@ -11,19 +10,26 @@ import Message from '../Message/Message'
 
 import styles from './Chat.module.less'
 
-const createIdFromMessage = ({ createdAt: { seconds, nanoseconds } }: Data<firebase.firestore.DocumentData, '', ''>) =>
-  `${seconds}-${nanoseconds}`
-
 const Chat = () => {
   const { auth, firestore } = useContext(Context)
   const [user] = useAuthState(auth)
   const [messages, loading] = useCollectionData(firestore.collection('messages').orderBy('createdAt'))
   const [messageText, setMessageText] = useState('')
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const content = contentRef.current
+    if (!content) {
+      return
+    }
+    content.scrollTop = content.scrollHeight - content.clientHeight
+  }, [messages?.length])
 
   const sendMessage = () => {
     if (!user) {
       return
     }
+
     firestore.collection('messages').add({
       uid: user.uid,
       displayName: user.displayName,
@@ -40,17 +46,17 @@ const Chat = () => {
     }
   }
 
-  if (loading) {
+  if (loading || !user) {
     return <Loader />
   }
 
   return (
     <div className={styles.base}>
-      <div className={styles.content}>
-        {messages?.map((message) => (
+      <div className={styles.content} ref={contentRef}>
+        {messages?.map((message, index) => (
           <Message
-            key={createIdFromMessage(message)}
-            uid={message.uid}
+            key={index}
+            isOwn={message.uid === user.uid}
             name={message.displayName}
             text={message.text}
             avatar={message.avatar}
