@@ -7,6 +7,11 @@ export type Props = {
   text: string
 }
 
+/**
+ * Show own or companion message
+ * @param props Props
+ * @returns JSX.Element
+ */
 const Message = ({ isOwn = false, name, avatar, text }: Props) => {
   return (
     <div className={styles.base}>

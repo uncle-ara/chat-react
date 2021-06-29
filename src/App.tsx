@@ -11,6 +11,11 @@ import Login from './components/Login/Login'
 import styles from './App.module.less'
 import { Context } from './context'
 
+/**
+ * Render application.
+ * It is using as entry point for ReactDOM render.
+ * @returns JSX.Element
+ */
 const App = () => {
   const { auth } = useContext(Context)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

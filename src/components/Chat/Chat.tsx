@@ -10,6 +10,10 @@ import Message from '../Message/Message'
 
 import styles from './Chat.module.less'
 
+/**
+ * Render chat view with messages and input message
+ * @returns JSX.Element
+ */
 const Chat = () => {
   const { auth, firestore } = useContext(Context)
   const [user] = useAuthState(auth)
@@ -17,6 +21,9 @@ const Chat = () => {
   const [messageText, setMessageText] = useState('')
   const contentRef = useRef<HTMLDivElement>(null)
 
+  /**
+   * Scroll to bottom when messages change length.
+   */
   useEffect(() => {
     const content = contentRef.current
     if (!content) {
@@ -25,6 +32,10 @@ const Chat = () => {
     content.scrollTop = content.scrollHeight - content.clientHeight
   }, [messages?.length])
 
+  /**
+   * Send message to firebase.
+   * Clear message input.
+   */
   const sendMessage = () => {
     if (!user) {
       return
@@ -40,6 +51,10 @@ const Chat = () => {
     setMessageText('')
   }
 
+  /**
+   * Send message by Enter key button.
+   * @param event React.KeyboardEvent<HTMLInputElement>
+   */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       sendMessage()

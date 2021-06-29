@@ -7,6 +7,11 @@ export interface Props extends RouteProps {
   component: React.FC
 }
 
+/**
+ * Wrapper of Route from react-router-dom with auth guard
+ * @param props Props
+ * @returns JSX.Element
+ */
 const AuthRoute = ({ component: Component, ...rest }: Props) => {
   const { auth } = useContext(Context)
   const [user] = useAuthState(auth)

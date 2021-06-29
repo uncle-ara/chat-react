@@ -5,10 +5,18 @@ import { Context } from '../../context'
 
 import styles from './UserMenu.module.less'
 
+/**
+ * Show bar with user and sign out button
+ * @returns JSX.Element
+ */
 const UserMenu = () => {
   const { auth } = useContext(Context)
   const [user] = useAuthState(auth)
 
+  /**
+   * Signing out from account
+   * @param event React.MouseEvent
+   */
   const handleSignout = (event: React.MouseEvent) => {
     event.preventDefault()
     firebase.auth().signOut()

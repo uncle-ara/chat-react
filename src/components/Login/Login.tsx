@@ -5,20 +5,26 @@ import { Context } from '../../context'
 
 import styles from './Login.module.less'
 
+/**
+ * Render sign in panel
+ * @returns JSX.Element
+ */
 const Login = () => {
   const { auth } = useContext(Context)
 
-  const login = async () => {
+  /**
+   * Authorizate with Google
+   */
+  const signin = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
-    const { user } = await auth.signInWithPopup(provider)
-    console.log(user)
+    auth.signInWithPopup(provider).catch(console.error)
   }
 
   return (
     <div className={styles.base}>
       <div className={styles.panel}>
         <div className={styles.title}>Welcome!</div>
-        <Button onClick={login}>Войти с помощью Google</Button>
+        <Button onClick={signin}>Войти с помощью Google</Button>
       </div>
     </div>
   )
